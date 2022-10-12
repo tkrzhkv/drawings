@@ -1,0 +1,52 @@
+[
+  {
+    "id": 0,
+    "imageUrl": "/img/paintings/IMG_0059.JPG",
+    "title": "Paradise",
+    "types": [0, 1],
+    "sizes": ["S", "M", "L"],
+    "price": 140,
+    "category": 0,
+    "rating": 4
+  },
+  {
+    "id": 1,
+    "imageUrl": "/img/paintings/IMG_0104.JPG",
+    "title": "Paradise",
+    "types": [0, 1],
+    "sizes": ["S", "M", "L"],
+    "price": 160,
+    "category": 0,
+    "rating": 4
+  },
+  {
+    "id": 2,
+    "imageUrl": "/img/paintings/IMG_1232.JPG",
+    "title": "Paradise",
+    "types": [0, 1],
+    "sizes": ["S", "M", "L"],
+    "price": 130,
+    "category": 0,
+    "rating": 4
+  },
+  {
+    "id": 3,
+    "imageUrl": "/img/paintings/IMG_1233.JPG",
+    "title": "Paradise",
+    "types": [0, 1],
+    "sizes": ["S", "M", "L"],
+    "price": 150,
+    "category": 0,
+    "rating": 4
+  },
+  {
+    "id": 4,
+    "imageUrl": "/img/paintings/IMG_9678.JPG",
+    "title": "Paradise",
+    "types": [0, 1],
+    "sizes": ["S", "M", "L"],
+    "price": 120,
+    "category": 0,
+    "rating": 4
+  }
+]
