@@ -1,52 +1,94 @@
 import React from "react";
-import axios from "axios";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PaintingsBlock/Skeleton";
 import PaintingsBlock from "../components/PaintingsBlock";
 import Pagination from "../components/Pagination"
-import {SearchContext} from "../App";
 import {useDispatch, useSelector} from "react-redux";
-import {setCategoryId, setCurrentPage} from "../redux/slices/filterSlice";
-
+import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
+import {fetchPaintings} from "../redux/slices/paintingSlice";
+import qs from 'qs';
+import {useNavigate} from 'react-router-dom'
+import {sortItems} from '../components/Sort'
 
 const Home = () => {
-    const {categoryId, sort, currentPage} = useSelector(state => state.filter)
-    const sortType = sort.sortProperty;
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const isMounted = React.useRef(false);
 
-    const [paintings, setPaintings] = React.useState([])
-    const [isLoading, setIsLoading] = React.useState(true)
+    const {items, status} = useSelector(state => state.painting);
+    const {categoryId, sort, currentPage, searchValue} = useSelector(state => state.filter);
+
+    const sortType = sort.sortProperty;
+    const isSearch = React.useRef(false);
+
 
     const onChangeCategory = (id) => {
-        dispatch(setCategoryId(id));
+        dispatch(setCategoryId(id))
     }
 
     const onChangePage = (number) => {
         dispatch(setCurrentPage(number))
     }
 
-
-    const {searchValue} = React.useContext(SearchContext);
-
-    React.useEffect(() => {
-
-        setIsLoading(true)
+    const getPaintings = async () => {
 
         const order = sortType.includes('-') ? 'asc' : "desc";
         const sortBy = sortType.replace('-', '');
-        const category = categoryId > 0 ? `category=${categoryId}`: '';
-        const search = searchValue ? `&search=${searchValue}`: '';
+        const category = categoryId > 0 ? `category=${categoryId}` : '';
+        const search = searchValue ? `&search=${searchValue}` : '';
 
-        axios.get(`https://63386d3b937ea77bfdbff520.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`)
-            .then((res) => {
-                setPaintings(res.data)
-                setIsLoading(false)
+        dispatch(
+            fetchPaintings({
+                order,
+                sortBy,
+                category,
+                search,
+                currentPage,
+            }))
+        window.scrollTo(0, 0)
+    }
+
+    //If first render passed, then check url paramms and save it in redux
+    React.useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1))
+            const sort = sortItems.find(obj => obj.sortProperty === params.sortProperty)
+        dispatch(
+            setFilters({
+                ...params,
+                sort
             })
-            window.scrollTo(0,0)
-    },[categoryId, sortType, searchValue, currentPage])
+        )
+            isSearch.current = true;
+        }
+    }, []);
 
-    const drawings = paintings.map((obj) => <PaintingsBlock
+    //If params changed and first render passed
+    React.useEffect(() => {
+        if (isMounted.current) {
+            const queryString = qs.stringify({
+                sortProperty: sort.sortProperty,
+                categoryId,
+                currentPage,
+            })
+
+            navigate(`?${queryString}`);
+        }
+        isMounted.current = true;
+    }, [categoryId, sortType, searchValue, currentPage]);
+
+    //If first render was then request drawing(paintings).
+    React.useEffect(() => {
+        window.scrollTo(0,0)
+
+        if (!isSearch.current) {
+            getPaintings()
+        }
+        isSearch.current = false;
+    },[categoryId, sortType, searchValue, currentPage]);
+
+    const drawings = items.map((obj) => <PaintingsBlock
         key={obj.id}
         // price={obj.price}
         // title={obj.title}
@@ -55,7 +97,7 @@ const Home = () => {
         // можно просто передать целый обьект
         {...obj}/>);
 
-    const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
+    const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index}/>);
 
     return (
         <div className="container">
@@ -67,9 +109,12 @@ const Home = () => {
                 <Sort/>
             </div>
             <h2 className="content__title">All paintings</h2>
-            <div className="content__items">
-                {isLoading ? skeletons : drawings}
-            </div>
+            {status === 'error' ? (
+                <div className='content__error-info'>
+                    <h2>Error , please try again.</h2>
+                </div>
+            ) : (<div className="content__items">{status === 'loading'? skeletons : drawings}</div>
+            )}
             <Pagination
                 currentPage={currentPage}
                 onChangePage={onChangePage}/>

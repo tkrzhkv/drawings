@@ -9,13 +9,13 @@
       width: 40px;
       height: 40px;
       line-height: 38px;
-      border: 1px solid #0e409c;
+      border: 1px solid #4b4b4b;
       border-radius: 30px;
       margin-right: 20px;
       cursor: pointer;
 
       &:hover {
-        background-color: #0e409c;
+        background-color: #5b5b5b;
         font-weight: 800;
         color: #fff;
       }
@@ -24,8 +24,9 @@
   :global {
       .selected {
         a {
-          background-color: #0e409c;
+          background-color: #505050;
           color: #fff;
+          font-weight: 800;
         }
     }
   }

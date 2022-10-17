@@ -26,6 +26,7 @@
 
   &:hover {
     background-color: darken($orange, 8%);
+    transform: scale(1.05);
   }
 
   &:active {
@@ -54,16 +55,16 @@
   }
 
   &--outline {
-    background-color: #fff;
-    border-color: $orange;
+    background-color: #ffffff;
+    border-color: #000000;
     &,
     span {
-      color: $orange;
+      color: #0a0a0a;
     }
 
     svg {
       path {
-        fill: $orange;
+        fill: #070707;
       }
     }
 

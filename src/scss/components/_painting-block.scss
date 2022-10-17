@@ -13,6 +13,14 @@
   &__image {
     width: 260px;
     border-radius: 20px 60px;
+
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      filter: grayscale(0%);
+      transform:scale(1.03);
+      cursor: pointer;
+    }
   }
 
   &__title {
@@ -20,11 +28,12 @@
     font-weight: 900;
     letter-spacing: 1%;
     margin-bottom: 20px;
+    color: #1f1f1f;
   }
 
   &__selector {
     display: flex;
-    background-color: #f3f3f3;
+    background-color: #e7e7e7;
     border-radius: 10px;
     flex-direction: column;
     padding: 6px;
@@ -45,10 +54,11 @@
         font-size: 14px;
         //@include noselect();
         &.active {
-          background: #ffffff;
+          background: #cb7650;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           border-radius: 5px;
           cursor: auto;
+          color: #fff;
         }
       }
     }
@@ -66,5 +76,6 @@
     font-size: 22px;
     line-height: 27px;
     letter-spacing: 0.015em;
+    color: #151515;
   }
 }

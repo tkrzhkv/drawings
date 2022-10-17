@@ -1,15 +1,27 @@
-import '../../scss/components/_painting-block.scss'
 import React from 'react'
+import {useDispatch, useSelector} from 'react-redux';
+import {addItem} from '../../redux/slices/cartSlice'
+import '../../scss/components/_painting-block.scss'
 
-function Index({title, price, imageUrl, sizes}) {
+function PaintingsBlock({id, title, price, imageUrl, sizes}) {
+    const dispatch = useDispatch()
+    const cartItem = useSelector(state => state.cart.items.find(obj => obj.id === id))
+    const addedCount = cartItem ? cartItem.count : 0;
 
-    const [count, setCount] = React.useState(0)
-    const onClickAdd = () => {
-        setCount(count + 1)
-    }
     const [active, setActive] = React.useState(0)
     const onActiveState = (index) => {
         setActive(index)
+    }
+
+
+    const onClickAdd = () => {
+        const item = {
+            id,
+            title,
+            price,
+            imageUrl,
+        }
+        dispatch(addItem(item))
     }
 
     return (
@@ -23,11 +35,11 @@ function Index({title, price, imageUrl, sizes}) {
                 <h4 className="painting-block__title">{title}</h4>
                 <div className="painting-block__selector">
                     <ul>
-                        {sizes.map((size, index) => <li
-                            key={index}
-                            onClick={() => onActiveState(index)}
-                            className={active === index ? 'active' : ''}>{size}
-                        </li>)}
+                        {/*{sizes.map((size, index) => <li*/}
+                        {/*    key={index}*/}
+                        {/*    onClick={() => onActiveState(index)}*/}
+                        {/*    className={active === index ? 'active' : ''}>{size}*/}
+                        {/*</li>)}*/}
                     </ul>
                 </div>
                 <div className="painting-block__bottom">
@@ -45,8 +57,8 @@ function Index({title, price, imageUrl, sizes}) {
                                 fill="white"
                             />
                         </svg>
-                        <span>Добавить</span>
-                        <i>{count}</i>
+                        <span>Add</span>
+                        {addedCount > 0 && <i>{addedCount}</i>}
                     </button>
                 </div>
             </div>
@@ -54,4 +66,4 @@ function Index({title, price, imageUrl, sizes}) {
     )
 }
 
-export default Index;
+export default PaintingsBlock;
