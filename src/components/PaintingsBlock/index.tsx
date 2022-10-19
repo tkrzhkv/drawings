@@ -3,13 +3,29 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addItem} from '../../redux/slices/cartSlice'
 import '../../scss/components/_painting-block.scss'
 
-function PaintingsBlock({id, title, price, imageUrl, sizes}) {
+type PaintingsProps = {
+    id: string;
+    title: string;
+    price: number;
+    imageUrl: string;
+    sizes: number[];
+}
+
+const PaintingsBlock: React.FC<PaintingsProps> = ({
+    id,
+    title,
+    price,
+    imageUrl,
+    sizes
+}) => {
+
     const dispatch = useDispatch()
+    // @ts-ignore
     const cartItem = useSelector(state => state.cart.items.find(obj => obj.id === id))
     const addedCount = cartItem ? cartItem.count : 0;
 
     const [active, setActive] = React.useState(0)
-    const onActiveState = (index) => {
+    const onActiveState = (index: number) => {
         setActive(index)
     }
 

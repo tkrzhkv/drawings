@@ -8,27 +8,27 @@ import {useDispatch, useSelector} from "react-redux";
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
 import {fetchPaintings} from "../redux/slices/paintingSlice";
 import qs from 'qs';
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {sortItems} from '../components/Sort'
 
-const Home = () => {
+const Home: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isMounted = React.useRef(false);
 
-    const {items, status} = useSelector(state => state.painting);
-    const {categoryId, sort, currentPage, searchValue} = useSelector(state => state.filter);
+    const {items, status} = useSelector((state: any) => state.painting);
+    const {categoryId, sort, currentPage, searchValue} = useSelector((state: any) => state.filter);
 
     const sortType = sort.sortProperty;
     const isSearch = React.useRef(false);
 
 
-    const onChangeCategory = (id) => {
+    const onChangeCategory = (id: number) => {
         dispatch(setCategoryId(id))
     }
 
-    const onChangePage = (number) => {
-        dispatch(setCurrentPage(number))
+    const onChangePage = (page: number) => {
+        dispatch(setCurrentPage(page))
     }
 
     const getPaintings = async () => {
@@ -38,7 +38,9 @@ const Home = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const search = searchValue ? `&search=${searchValue}` : '';
 
+
         dispatch(
+            // @ts-ignore
             fetchPaintings({
                 order,
                 sortBy,
@@ -49,7 +51,7 @@ const Home = () => {
         window.scrollTo(0, 0)
     }
 
-    //If first render passed, then check url paramms and save it in redux
+    //If first render passed, then check url params and save it in redux
     React.useEffect(() => {
         if (window.location.search) {
             const params = qs.parse(window.location.search.substring(1))
@@ -88,14 +90,9 @@ const Home = () => {
         isSearch.current = false;
     },[categoryId, sortType, searchValue, currentPage]);
 
-    const drawings = items.map((obj) => <PaintingsBlock
-        key={obj.id}
-        // price={obj.price}
-        // title={obj.title}
-        // imageUrl={obj.imageUrl}
-        // sizes={obj.sizes}
-        // можно просто передать целый обьект
-        {...obj}/>);
+    const drawings = items.map((obj: any) => <Link key={obj.id} to={`/paintingInfo/${obj.id}`}>
+        <PaintingsBlock{...obj}/>
+    </Link>);
 
     const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index}/>);
 
@@ -104,7 +101,7 @@ const Home = () => {
             <div className="content__top">
                 <Categories
                     value={categoryId}
-                    onClickCategory={(id) => {onChangeCategory(id)}}
+                    onClickCategory={(id: number) => {onChangeCategory(id)}}
                 />
                 <Sort/>
             </div>
