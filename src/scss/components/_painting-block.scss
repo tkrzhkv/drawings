@@ -1,4 +1,4 @@
-@import '../variables';
+@import "../variables";
 
 .painting-block {
   width: 280px;
@@ -18,7 +18,7 @@
 
     &:hover {
       filter: grayscale(0%);
-      transform:scale(1.03);
+      transform: scale(1.03);
       cursor: pointer;
     }
   }

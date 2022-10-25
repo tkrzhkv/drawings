@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+
+  .img {
+    border-radius: 20px 70px;
+    width: 500px;
+    height: 600px;
+    padding: 20px 0 0 40px;
+  }
+}
+
+.discription {
+  width: 500px;
+  margin: 30px 0 0 50px;
+  font-size: 22px;
+}
+
+.title {
+  margin: 10px 0 0 50px;
+}
