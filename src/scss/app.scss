@@ -232,6 +232,14 @@ body {
             display: none;
           }
         }
+        &:disabled {
+          opacity: 0.4;
+          border-color: #b6b6b6;
+
+          &:active {
+            transform: none;
+          }
+        }
       }
 
       b {

@@ -1,6 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../redux/slices/cartSlice";
+import { Link } from "react-router-dom";
+import { addItem } from "../../redux/cart/slice";
+import { CartItem } from "../../redux/cart/types";
 import "../../scss/components/_painting-block.scss";
 
 type PaintingsProps = {
@@ -11,13 +13,7 @@ type PaintingsProps = {
   sizes: number[];
 };
 
-const PaintingsBlock: React.FC<PaintingsProps> = ({
-  id,
-  title,
-  price,
-  imageUrl,
-  sizes,
-}) => {
+const PaintingsBlock: React.FC<PaintingsProps> = ({ id, title, price, imageUrl, sizes }) => {
   const dispatch = useDispatch();
 
   const cartItem = useSelector((state) =>
@@ -33,11 +29,12 @@ const PaintingsBlock: React.FC<PaintingsProps> = ({
   };
 
   const onClickAdd = () => {
-    const item = {
+    const item: CartItem = {
       id,
       title,
       price,
       imageUrl,
+      count: 0,
     };
     dispatch(addItem(item));
   };
@@ -45,12 +42,17 @@ const PaintingsBlock: React.FC<PaintingsProps> = ({
   return (
     <div className='painting-block-wrapper'>
       <div className='painting-block'>
-        <img
-          className='painting-block__image'
-          src={imageUrl}
-          alt='drawing'
-        />
-        <h4 className='painting-block__title'>{title}</h4>
+        <Link
+          key={id}
+          to={`/paintingInfo/${id}`}
+        >
+          <img
+            className='painting-block__image'
+            src={imageUrl}
+            alt='drawing'
+          />
+          <h4 className='painting-block__title'>{title}</h4>
+        </Link>
         <div className='painting-block__selector'>
           <ul>
             {/*{sizes.map((size, index) => <li*/}
