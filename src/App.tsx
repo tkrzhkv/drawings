@@ -1,10 +1,14 @@
-import Home from "./pages/Home";
+import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import NotFound from "./pages/NotFound";
-import Cart from "./pages/Cart";
-import PaintingInfo from "./pages/PaintingInfo/PaintingInfo";
+
+import Home from "./pages/Home";
+
 import "./scss/app.scss";
 import MainLayout from "./layouts/MainLayout";
+
+const Cart = React.lazy(() => import("./pages/Cart"));
+const NotFound = React.lazy(() => import("./pages/NotFound"));
+const PaintingInfo = React.lazy(() => import("./pages/PaintingInfo/PaintingInfo"));
 
 function App() {
   return (
@@ -19,15 +23,27 @@ function App() {
         />
         <Route
           path='cart'
-          element={<Cart />}
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Cart />
+            </Suspense>
+          }
         />
         <Route
           path='paintingInfo/:id'
-          element={<PaintingInfo />}
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <PaintingInfo />
+            </Suspense>
+          }
         />
         <Route
           path='*'
-          element={<NotFound />}
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <NotFound />
+            </Suspense>
+          }
         />
       </Route>
     </Routes>

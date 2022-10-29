@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectCartItemById } from "../../redux/cart/selectors";
 import { addItem } from "../../redux/cart/slice";
 import { CartItem } from "../../redux/cart/types";
 import "../../scss/components/_painting-block.scss";
@@ -15,18 +16,9 @@ type PaintingsProps = {
 
 const PaintingsBlock: React.FC<PaintingsProps> = ({ id, title, price, imageUrl, sizes }) => {
   const dispatch = useDispatch();
-
-  const cartItem = useSelector((state) =>
-    // @ts-ignore
-    state.cart.items.find((obj) => obj.id === id)
-  );
+  const cartItem = useSelector(selectCartItemById(id));
 
   const addedCount = cartItem ? cartItem.count : 0;
-
-  const [active, setActive] = React.useState(0);
-  const onActiveState = (index: number) => {
-    setActive(index);
-  };
 
   const onClickAdd = () => {
     const item: CartItem = {
@@ -54,13 +46,7 @@ const PaintingsBlock: React.FC<PaintingsProps> = ({ id, title, price, imageUrl, 
           <h4 className='painting-block__title'>{title}</h4>
         </Link>
         <div className='painting-block__selector'>
-          <ul>
-            {/*{sizes.map((size, index) => <li*/}
-            {/*    key={index}*/}
-            {/*    onClick={() => onActiveState(index)}*/}
-            {/*    className={active === index ? 'active' : ''}>{size}*/}
-            {/*</li>)}*/}
-          </ul>
+          <ul></ul>
         </div>
         <div className='painting-block__bottom'>
           <div className='painting-block__price'>{price}$</div>

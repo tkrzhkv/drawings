@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  left: -250px;
+  // left: -250px;
 }
 
 .input {
@@ -10,6 +10,13 @@
   border-radius: 40px 90px;
   font-size: 16px;
   background-color: #f1f1f1;
+
+  @media (max-width: 820px) {
+    width: 200px;
+  }
+  @media (max-width: 700px) {
+    width: 150px;
+  }
 }
 
 .icon__search {

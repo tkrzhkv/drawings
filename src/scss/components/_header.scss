@@ -9,8 +9,18 @@
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: 470px) {
+    @media (max-width: 500px) {
       flex-direction: column;
+    }
+  }
+
+  &__cart {
+    @media (max-width: 770px) {
+      justify-content: center;
+    }
+
+    @media (max-width: 500px) {
+      padding-top: 20px;
     }
   }
 
