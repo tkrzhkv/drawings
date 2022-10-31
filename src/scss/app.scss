@@ -198,6 +198,15 @@ body {
       }
     }
 
+    @media (max-width: 400px) {
+      display: flex;
+
+      &-img {
+        height: 100px;
+        width: 60px;
+      }
+    }
+
     &-info {
       display: flex;
       flex-direction: column;
@@ -211,6 +220,12 @@ body {
         position: relative;
         top: -120px;
         left: 190px;
+      }
+
+      @media (max-width: 400px) {
+        position: relative;
+        top: -50px;
+        left: 50px;
       }
 
       h3 {
@@ -269,6 +284,20 @@ body {
           padding: 0 6px 0 6px;
         }
       }
+
+      @media (max-width: 400px) {
+        position: relative;
+        top: 0;
+        left: -50px;
+
+        .button {
+          height: 32px;
+        }
+
+        b {
+          padding: 0 6px 0 6px;
+        }
+      }
     }
 
     &-price {
@@ -287,6 +316,12 @@ body {
         position: relative;
         top: 50px;
         left: -15px;
+      }
+
+      @media (max-width: 400px) {
+        position: relative;
+        top: 40px;
+        left: -85px;
       }
     }
 
@@ -325,6 +360,16 @@ body {
         position: relative;
         top: 110px;
         left: -80px;
+
+        .button {
+          height: 32px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        position: relative;
+        top: 0;
+        left: -10px;
 
         .button {
           height: 32px;
